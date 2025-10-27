@@ -8,12 +8,16 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->id('productid'); // standaard 'id' als primary key
+            $table->id('productid');
             $table->string('name');
             $table->text('description')->nullable();
+            $table->string('location')->nullable();
             $table->string('status')->default('active');
-            $table->timestamp('last_used')->nullable();
+            $table->date('last_used')->nullable();
+            $table->unsignedBigInteger('used_by')->nullable();
             $table->timestamps();
+
+            $table->foreign('used_by')->references('userid')->on('employees')->onDelete('set null');
         });
     }
 

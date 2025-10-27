@@ -16,12 +16,13 @@
                 <div class="flex h-16 items-center justify-between">
                     <div class="flex items-center">
                         <div class="shrink-0">
-                            <img src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company" class="size-8" />
+                            <img src="{{ asset('Assets/ResQlogo.png') }}" alt="Your Company" class="size-24" />
                         </div>
                         <div class="hidden md:block">
                             <div class="ml-10 flex items-baseline space-x-4">
                                 <!-- Current: "bg-gray-950/50 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" -->
                                 <x-nav-link href="/" :active="request() -> is('/')">Home</x-nav-link>
+                                <x-nav-link href="/inlog" :active="request() -> is('inlog')">Inloggen</x-nav-link>
                                 <x-nav-link href="/producten" :active="request() -> is('producten')">Producten</x-nav-link>
                             </div>
                         </div>
@@ -53,6 +54,7 @@
                 <div class="space-y-1 px-2 pt-2 pb-3 sm:px-3">
                     <!-- Current: "bg-gray-950/50 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" -->
                     <x-nav-link href="/" :active="request() -> is('/')">Home</x-nav-link>
+                    <x-nav-link href="/inlog" :active="request() -> is('inlog')">Inloggen</x-nav-link>
                     <x-nav-link href="/producten" :active="request() -> is('producten')">Producten</x-nav-link>
                 </div>
             </el-disclosure>
