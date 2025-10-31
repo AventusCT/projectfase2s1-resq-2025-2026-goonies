@@ -20,11 +20,14 @@
                         </div>
                         <div class="hidden md:block">
                             <div class="ml-10 flex items-baseline space-x-4">
-                                <!-- Current: "bg-gray-950/50 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" -->
-                                <x-nav-link href="/" :active="request() -> is('/')">Home</x-nav-link>
-                                <x-nav-link href="/inlog" :active="request() -> is('inlog')">Inloggen</x-nav-link>
-                                <x-nav-link href="/producten" :active="request() -> is('producten')">Producten</x-nav-link>
+                                <x-nav-link href="/" :active="request()->is('/')">Home</x-nav-link>
+                                <x-nav-link href="/inlog" :active="request()->is('inlog')">Inloggen</x-nav-link>
+
+                                @auth
+                                <x-nav-link href="/producten" :active="request()->is('producten')">Producten</x-nav-link>
+                                @endauth
                             </div>
+
                         </div>
                     </div>
                     <div class="hidden md:block">
@@ -52,19 +55,40 @@
 
             <el-disclosure id="mobile-menu" hidden class="block md:hidden">
                 <div class="space-y-1 px-2 pt-2 pb-3 sm:px-3">
-                    <!-- Current: "bg-gray-950/50 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" -->
-                    <x-nav-link href="/" :active="request() -> is('/')">Home</x-nav-link>
-                    <x-nav-link href="/inlog" :active="request() -> is('inlog')">Inloggen</x-nav-link>
-                    <x-nav-link href="/producten" :active="request() -> is('producten')">Producten</x-nav-link>
+                    <x-nav-link href="/" :active="request()->is('/')">Home</x-nav-link>
+                    <x-nav-link href="/inlog" :active="request()->is('inlog')">Inloggen</x-nav-link>
+
+                    @auth
+                    <x-nav-link href="/producten" :active="request()->is('producten')">Producten</x-nav-link>
+                    @endauth
                 </div>
+
             </el-disclosure>
         </nav>
 
         <header class="relative bg-gray-800 after:pointer-events-none after:absolute after:inset-x-0 after:inset-y-0 after:border-y after:border-white/10">
             <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                <h1 class="text-3xl font-bold tracking-tight text-white">{{ $heading }}</h1>
+                <div class="flex items-center justify-between">
+                    <h1 class="text-3xl font-bold tracking-tight text-white">
+                        {{ $heading }}
+                    </h1>
+
+                    @auth
+                    <div class="flex items-center space-x-4">
+                        <span class="text-sm font-normal text-gray-300">{{ Auth::user()->name }}</span>
+
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="text-sm text-white bg-red-600 hover:bg-red-700 px-3 py-1 rounded">
+                                Uitloggen
+                            </button>
+                        </form>
+                    </div>
+                    @endauth
+                </div>
             </div>
         </header>
+
         <main>
             <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                 {{ $slot }}

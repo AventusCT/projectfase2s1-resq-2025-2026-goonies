@@ -3,20 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Employee;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    public function authenticate(Request $request)
+    public function showLoginForm()
     {
-        $credentials = $request->only('email', 'password');
+        return view('inlog'); // Zorg dat deze view bestaat
+    }
 
-        $employee = Employee::where('email', $credentials['email'])->first();
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
 
-        if ($employee && Hash::check($credentials['password'], $employee->password)) {
-            session(['employee_id' => $employee->userid]);
-            return redirect('/'); // of naar dashboard
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->intended(''); // Pas aan naar jouw route
         }
 
         return back()->with('error', 'Ongeldige inloggegevens');
