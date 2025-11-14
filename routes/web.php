@@ -5,6 +5,7 @@ use App\Models\Product;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\StatistiekenController;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/inlog', function () {
@@ -20,7 +21,7 @@ Route::get('/producten', [ProductController::class, 'index'])->name('producten.i
 // Homepagina
 Route::get('/', function () {
     return view('home');
-});
+})->name('home');
 
 // Product detailpagina via closure
 // Producten overzicht met filter via controller
@@ -30,10 +31,9 @@ Route::get('/producten', [ProductController::class, 'index'])
 
 // Product detailpagina via closure
 Route::get('/producten/{id}', function ($id) {
-    $product = Product::find($id);
+    $product = Product::findOrFail($id);
     return view('product', ['product' => $product]);
-})->middleware('auth');
-
+})->middleware('auth')->name('producten.show');
 
 Route::get('/register', [RegisterController::class, 'show'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
@@ -44,3 +44,7 @@ Route::post('/logout', function () {
     request()->session()->regenerateToken();
     return redirect('/'); // Of pas aan naar je gewenste pagina
 })->name('logout');
+
+Route::get('/statistieken', [StatistiekenController::class, 'index'])
+    ->middleware('auth') // alleen ingelogde gebruikers
+    ->name('statistieken');

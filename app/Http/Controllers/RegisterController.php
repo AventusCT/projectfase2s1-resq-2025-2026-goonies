@@ -30,6 +30,6 @@ class RegisterController extends Controller
 
         \Illuminate\Support\Facades\Auth::login($user);
 
-        return redirect()->route('inlog'); // Pas aan naar jouw route
+        return redirect()->route('home'); // Pas aan naar jouw route
     }
 }

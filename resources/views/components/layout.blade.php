@@ -21,10 +21,17 @@
                         <div class="hidden md:block">
                             <div class="ml-10 flex items-baseline space-x-4">
                                 <x-nav-link href="/" :active="request()->is('/')">Home</x-nav-link>
+
+                                @guest
                                 <x-nav-link href="/inlog" :active="request()->is('inlog')">Inloggen</x-nav-link>
+                                @endguest
 
                                 @auth
                                 <x-nav-link href="/producten" :active="request()->is('producten')">Producten</x-nav-link>
+
+                                @if(Auth::user()->is_admin)
+                                <x-nav-link href="/statistieken" :active="request()->is('statistieken')">Statistieken</x-nav-link>
+                                @endif
                                 @endauth
                             </div>
 
@@ -56,10 +63,17 @@
             <el-disclosure id="mobile-menu" hidden class="block md:hidden">
                 <div class="space-y-1 px-2 pt-2 pb-3 sm:px-3">
                     <x-nav-link href="/" :active="request()->is('/')">Home</x-nav-link>
+
+                    @guest
                     <x-nav-link href="/inlog" :active="request()->is('inlog')">Inloggen</x-nav-link>
+                    @endguest
 
                     @auth
                     <x-nav-link href="/producten" :active="request()->is('producten')">Producten</x-nav-link>
+
+                    @if(Auth::user()->is_admin)
+                    <x-nav-link href="/statistieken" :active="request()->is('statistieken')">Statistieken</x-nav-link>
+                    @endif
                     @endauth
                 </div>
 
